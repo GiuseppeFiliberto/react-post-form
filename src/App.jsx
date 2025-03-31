@@ -7,7 +7,6 @@ function App() {
     author: '',
     title: '',
     body: '',
-    privacy: ''
 
   })
 
@@ -16,7 +15,6 @@ function App() {
     author: '',
     title: '',
     body: '',
-    privacy: ''
 
   })
 
@@ -29,19 +27,36 @@ function App() {
 
   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
-    console.log(formData)
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.author.trim()) {
+      newErrors.author = 'Author name is required.';
+    }
+    if (!formData.title.trim()) {
+      newErrors.title = 'Title is required.';
+    }
+    return newErrors;
+  };
 
-    fetch('https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-      .then(response => response.json())
-      .then(data => console.log(data))
+  function handleSubmit(e) {
+    e.preventDefault();
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+    } else {
+      setErrors({});
+      console.log(formData);
+
+      fetch('https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+        .then(response => response.json())
+        .then(data => console.log(data));
+    }
   }
 
 
@@ -56,17 +71,18 @@ function App() {
             {/* author */}
             <div className="col">
               <div className="mb-3">
-                <label for="" className="form-label">Author</label>
+                <label htmlFor="author" className="form-label">Author</label>
                 <input
                   type="text"
-                  className="form-control"
+                  className={`form-control ${errors.author ? 'is-invalid' : ''}`}
                   name="author"
-                  id=""
+                  id="author"
                   aria-describedby="helpId"
                   placeholder="Type your name"
-                  value={FormData.author}
+                  value={formData.author}
                   onChange={handleFormData}
                 />
+                {errors.author && <div className="invalid-feedback">{errors.author}</div>}
                 <small id="helpId" className="form-text text-secondary">Help text</small>
               </div>
             </div>
@@ -74,26 +90,27 @@ function App() {
             {/* title */}
             <div className="col">
               <div className="mb-3">
-                <label for="" className="form-label">Title</label>
+                <label htmlFor="title" className="form-label">Title</label>
                 <input
                   type="text"
-                  className="form-control"
+                  className={`form-control ${errors.title ? 'is-invalid' : ''}`}
                   name="title"
-                  id=""
+                  id="title"
                   aria-describedby="helpId"
                   placeholder="Type the title"
-                  value={FormData.title}
+                  value={formData.title}
                   onChange={handleFormData}
                 />
+                {errors.title && <div className="invalid-feedback">{errors.title}</div>}
                 <small id="helpId" className="form-text text-secondary">Help text</small>
               </div>
             </div>
 
             {/* body */}
             <div className="col-12">
-              <div class="mb-3">
-                <label forHtml="" class="form-label"></label>
-                <textarea class="form-control" name="body" id="" rows="5" value={FormData.body} placeholder='Write something here' onChange={handleFormData}>
+              <div className="mb-3">
+                <label htmlFor="" className="form-label"></label>
+                <textarea className="form-control" name="body" id="" rows="5" value={formData.body} placeholder='Write something here' onChange={handleFormData}>
 
                 </textarea>
               </div>
@@ -104,31 +121,15 @@ function App() {
 
             <div className='p-3' role="group" data-bs-toggle="buttons">
               <label
-                class="btn btn-secondary active"
+                className="btn btn-primary"
               >
                 <input
                   type="checkbox"
-                  class="me-2 mr-5"
-                  name="private"
-                  id=""
-                  checked
-                  autocomplete="off"
-                  value='privacy'
-                  onChange={handleFormData}
-                />
-                Private
-              </label>
-
-              <label
-                class="btn btn-primary"
-              >
-                <input
-                  type="checkbox"
-                  class="me-2"
+                  className="me-2"
                   name="public"
                   id=""
-                  autocomplete="off"
-                  value='privacy'
+                  autoComplete="off"
+                  value='public'
                   onChange={handleFormData}
                 />
                 Public
@@ -141,7 +142,7 @@ function App() {
 
           <button
             type="submit"
-            class="btn btn-primary btn-lg"
+            className="btn btn-primary btn-lg"
           >
             Submit
           </button>
