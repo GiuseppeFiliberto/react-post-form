@@ -2,6 +2,24 @@ import { useState, useEffect } from 'react'
 
 function App() {
 
+  const [FormData, setFormData] = useState({
+
+    author: '',
+    title: '',
+    body: '',
+    privacy: ''
+
+  })
+
+  const [errors, setErrors] = useState({
+
+    author: '',
+    title: '',
+    body: '',
+    privacy: ''
+
+  })
+
   return (
     <>
       <div className="container p-4 bg-light mt-5 rounded">
@@ -68,7 +86,7 @@ function App() {
                   id=""
                   checked
                   autocomplete="off"
-                  value='private'
+                  value='privacy'
                 />
                 Private
               </label>
@@ -82,7 +100,7 @@ function App() {
                   name="public"
                   id=""
                   autocomplete="off"
-                  value='public'
+                  value='privacy'
                 />
                 Public
               </label>
