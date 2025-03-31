@@ -29,13 +29,28 @@ function App() {
 
   }
 
+  function handleSubmit(e) {
+    e.preventDefault()
+    console.log(formData)
+
+    fetch('https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+  }
+
 
   return (
     <>
       <div className="container p-4 bg-light mt-5 rounded">
 
         <h1 className='fw-bold mb-5'>Post Maker</h1>
-        <form method='POST'>
+        <form method='POST' onSubmit={handleSubmit} onChange={handleFormData}>
           <div className="row">
 
             {/* author */}
@@ -50,6 +65,7 @@ function App() {
                   aria-describedby="helpId"
                   placeholder="Type your name"
                   value={FormData.author}
+                  onChange={handleFormData}
                 />
                 <small id="helpId" className="form-text text-secondary">Help text</small>
               </div>
@@ -67,6 +83,7 @@ function App() {
                   aria-describedby="helpId"
                   placeholder="Type the title"
                   value={FormData.title}
+                  onChange={handleFormData}
                 />
                 <small id="helpId" className="form-text text-secondary">Help text</small>
               </div>
@@ -76,7 +93,7 @@ function App() {
             <div className="col-12">
               <div class="mb-3">
                 <label forHtml="" class="form-label"></label>
-                <textarea class="form-control" name="body" id="" rows="5" value={FormData.body} placeholder='Write something here'>
+                <textarea class="form-control" name="body" id="" rows="5" value={FormData.body} placeholder='Write something here' onChange={handleFormData}>
 
                 </textarea>
               </div>
@@ -97,6 +114,7 @@ function App() {
                   checked
                   autocomplete="off"
                   value='privacy'
+                  onChange={handleFormData}
                 />
                 Private
               </label>
@@ -111,6 +129,7 @@ function App() {
                   id=""
                   autocomplete="off"
                   value='privacy'
+                  onChange={handleFormData}
                 />
                 Public
               </label>
