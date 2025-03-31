@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 function App() {
 
-  const [FormData, setFormData] = useState({
+  const [formData, setFormData] = useState({
 
     author: '',
     title: '',
@@ -19,6 +19,16 @@ function App() {
     privacy: ''
 
   })
+
+  const handleFormData = (e) => {
+
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    const key = e.target.name
+
+    setFormData({ ...formData, [key]: value })
+
+  }
+
 
   return (
     <>
