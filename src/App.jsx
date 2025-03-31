@@ -1,33 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div className="container p-4">
+
+        <h1 className='text-white'>Post Maker</h1>
+        <form method='POST'>
+          <div className="row">
+            <div className="col">
+              <div className="mb-3">
+                <label for="" className="form-label">Author</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="author"
+                  id=""
+                  aria-describedby="helpId"
+                  placeholder="Type your name"
+                  value={FormData.author}
+                />
+                <small id="helpId" className="form-text text-secondary">Help text</small>
+              </div>
+            </div>
+          </div>
+
+
+        </form >
+      </div >
     </>
   )
 }
